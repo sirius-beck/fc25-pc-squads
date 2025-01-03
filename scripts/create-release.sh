@@ -22,7 +22,6 @@ FutSquads | \`${FUT_SQUADS_VERSION}\` | \`${SQUADS_UPDATED_AT}\`
 EOF
 )
 RELEASE_FILES=()
-RELEASE_EXISTS=$(if gh release view "$RELEASE_TAG"; then echo true; else echo false; fi)
 
 if [ -f "squads.zip" ]; then
 	RELEASE_FILES+=("squads.zip")
@@ -33,8 +32,7 @@ if [ -f "fut-squads.zip" ]; then
 fi
 
 if [ "$SQUADS_UPDATED" == false ]; then
-	echo "RELEASE_EXISTS=$RELEASE_EXISTS"
-	if [ "$RELEASE_EXISTS" == true ]; then
+	if gh release view "$RELEASE_TAG" &> /dev/null; then
 		echo "Updating release... Tag: ${RELEASE_TAG}"
 		gh release edit "$RELEASE_TAG" --title "$RELEASE_TITLE" --notes "$RELEASE_NOTES" --latest
 	else
