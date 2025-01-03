@@ -8,7 +8,7 @@ echo "tag: $tag | version: $version"
 exit 0
 
 if [ "$release_exists" == "not_found" ]; then
-    gh release create $tag-$version release-files/$tag.zip -t "$tag v$version" -n "Downloaded $tag for version $version."
+    gh release create $tag-$version $tag.zip -t "$tag v$version" -n "Downloaded $tag for version $version."
 else
     echo "Release $tag-$version already exists. Skipping creation."
 fi
