@@ -20,12 +20,8 @@ jobs:
       - name: Process Squads
         run: bash scripts/process-squads.sh
 
-      - name: Create or Update FutSquads Release
+      - name: Create or Update Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: bash scripts/create-release.sh fut-squads ${{ env.FUT_SQUADS_VERSION }}
-
-      - name: Create or Update Squads Release
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: bash scripts/create-release.sh squads ${{ env.SQUADS_VERSION }}
+          SQUADS_UPDATED: ${{ env.SQUADS_UPDATED }}
+        run: bash scripts/create-release.sh
