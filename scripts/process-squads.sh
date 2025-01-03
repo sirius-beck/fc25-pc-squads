@@ -1,15 +1,22 @@
 #!/bin/bash
 
+RESULT_FOLDER="downloader/result/pc64"
+
+if [ ! -d "$RESULT_FOLDER" ]; then
+  echo "Result folder not found: $RESULT_FOLDER"
+  exit 1
+fi
+
 # Process FUT folder
-fut_folder=$(ls -d downloader/result/pc64/FUT/*/)
-fut_version=$(basename "$fut_folder")
-fut_files=$(find "$fut_folder" -type f ! -name "*.bin")
-zip -j fut-squads.zip $fut_files
-echo "fut_version=$fut_version" >> $GITHUB_ENV
+FUT_SQUADS_FOLDER=$(ls -d $RESULT_FOLDER/FUT/*/)
+FUT_SQUADS_VERSION=$(basename "$FUT_SQUADS_FOLDER")
+FUT_SQUADS_FILES=$(find "$FUT_SQUADS_FOLDER" -type f ! -name "*.bin")
+zip -j fut-squads.zip "$FUT_SQUADS_FILES"
+echo "FUT_SQUADS_VERSION=$FUT_SQUADS_VERSION" >> "$GITHUB_ENV"
 
 # Process squads folder
-squads_folder=$(ls -d downloader/result/pc64/squads/*/)
-squads_version=$(basename "$squads_folder")
-squads_files=$(find "$squads_folder" -type f ! -name "*.bin")
-zip -j squads.zip $squads_files
-echo "squads_version=$squads_version" >> $GITHUB_ENV
+SQUADS_FOLDER=$(ls -d $RESULT_FOLDER/squads/*/)
+SQUADS_VERSION=$(basename "$SQUADS_FOLDER")
+SQUADS_FILES=$(find "$SQUADS_FOLDER" -type f ! -name "*.bin")
+zip -j squads.zip "$SQUADS_FILES"
+echo "SQUADS_VERSION=$SQUADS_VERSION" >> "$GITHUB_ENV"
