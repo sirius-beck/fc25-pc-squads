@@ -1,6 +1,6 @@
 #!/bin/bash
 
-tag=$1 // "squads" or "fut-squads"
+tag=$1 # "squads" or "fut-squads"
 version=$2
 release_exists=$(gh release view $tag-$version --json tagName --jq '.tagName' || echo "not_found")
 
