@@ -12,10 +12,10 @@ SQUADS_VERSION_DATA=$(cat "version/squads.version" 2> /dev/null)
 IFS='|' read -r FUT_SQUADS_VERSION FUT_SQUADS_UPDATED_AT <<< "$FUT_SQUADS_VERSION_DATA"
 IFS='|' read -r SQUADS_VERSION SQUADS_UPDATED_AT <<< "$SQUADS_VERSION_DATA"
 
-RELEASE_TAG="squads"
-RELEASE_TITLE="FC25 Squads"
+RELEASE_TAG="pc64"
+RELEASE_TITLE="FC25 PC Squads"
 RELEASE_NOTES=$(cat << EOF
-File | Version | Updated At
+File | Version | Updated At (UTC)
 --- | --- | ---
 Squads | \`${SQUADS_VERSION}\` | \`${FUT_SQUADS_UPDATED_AT}\`
 FutSquads | \`${FUT_SQUADS_VERSION}\` | \`${SQUADS_UPDATED_AT}\`
