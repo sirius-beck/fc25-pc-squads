@@ -2,7 +2,7 @@
 
 tag=$1 # "squads" or "fut-squads"
 version=$2
-release_exists=$(gh release view $tag-$version --json tagName --jq '.tagName' || echo "not_found")
+release_exists=$(gh release view $tag-$version || echo "not_found")
 
 echo "tag: $tag | version: $version"
 
