@@ -33,6 +33,7 @@ if [ -f "fut-squads.zip" ]; then
 fi
 
 if [ "$SQUADS_UPDATED" == false ]; then
+	echo "RELEASE_EXISTS=$RELEASE_EXISTS"
 	if [ "$RELEASE_EXISTS" == true ]; then
 		echo "Updating release... Tag: ${RELEASE_TAG}"
 		gh release edit "$RELEASE_TAG" --title "$RELEASE_TITLE" --notes "$RELEASE_NOTES" --latest
