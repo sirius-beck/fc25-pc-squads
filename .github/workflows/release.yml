@@ -23,9 +23,9 @@ jobs:
       - name: Create or Update FutSquads Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: bash scripts/create-release.sh fut-squads ${{ steps.get_fut_version.outputs.id }}
+        run: bash scripts/create-release.sh fut-squads ${{ env.fut_version }}
 
       - name: Create or Update Squads Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: bash scripts/create-release.sh squads ${{ steps.get_squads_version.outputs.id }}
+        run: bash scripts/create-release.sh squads ${{ env.squads_version }}
