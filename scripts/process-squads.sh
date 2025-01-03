@@ -12,10 +12,41 @@ if ! [ -d version ]; then
 	mkdir version
 fi
 
+function push_version_changes() {
+	local version_file="$1"
+	local type="$2"
+	local version="$3"
+
+	# Check if the version file exists
+	if ! [ -f "$version_file" ]; then
+		echo "Version file not found: $version_file"
+		exit 1
+	fi
+
+	# type must be fut-squads or squads
+	if [ "$type" != "fut-squads" ] && [ "$type" != "squads" ]; then
+		echo "Invalid type. Please use 'fut-squads' or 'squads'."
+		exit 1
+	fi
+
+	# version must be a number
+	if ! [[ "$version" =~ ^[0-9]+$ ]]; then
+		echo "Version must be a number."
+		exit 1
+	fi
+
+	git config --global user.email "siriusbeck.mods@gmail.com"
+	git config --global user.name "Sirius Beck"
+	git add "$version_file"
+	git commit -m "Update ${type} version to ${version}."
+	git push
+}
+
 function processSquads() {
 	local type="$1" # fut-squads | squads
 	local folder_name folder files version_data new_version old_version date_utc
 
+	# type must be fut-squads or squads
 	if [ "$type" != "fut-squads" ] && [ "$type" != "squads" ]; then
 		echo "Invalid type. Please use 'fut-squads' or 'squads'."
 		exit 1
@@ -38,9 +69,7 @@ function processSquads() {
 		echo "${new_version}|${date_utc}" > "$version_file"
 		zip -j "${type}.zip" "$files"
 
-		git add "$version_file"
-		git commit -m "Update ${type} version to ${new_version}."
-		git push
+		push_version_changes "$version_file" "$type" "$new_version"
 
 		echo "Updated ${type} version from ${old_version} to ${new_version}."
 	fi
