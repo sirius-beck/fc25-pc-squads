@@ -1,0 +1,30 @@
+name: Process and Release Squads
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  process-squads:
+    name: Process Squads and Create Releases
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # - name: Setup GitHub CLI
+      #   run: bash scripts/setup-gh-cli.sh
+
+      - name: Download Squads
+        run: bash scripts/download-squads.sh
+
+      - name: Process Squads
+        run: bash scripts/process-squads.sh
+
+      - name: Create or Update FutSquads Release
+        run: bash scripts/create-release.sh fut-squads ${{ steps.get_fut_version.outputs.id }}
+
+      - name: Create or Update Squads Release
+        run: bash scripts/create-release.sh squads ${{ steps.get_squads_version.outputs.id }}
