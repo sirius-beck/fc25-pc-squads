@@ -25,7 +25,8 @@ function processSquads() {
 	folder=$(ls -d $RESULT_FOLDER/"$folder_name"/*/)
 	files=$(find "$folder" -type f ! -name "*.bin")
 
-	version_data=$(cat "version/${type}.version" 2> /dev/null)
+	version_file="version/${type}.version"
+	version_data=$(cat "$version_file" 2> /dev/null)
 	new_version=$(basename "$folder")
 
 	IFS='|' read -r old_version _ <<< "$version_data"
@@ -34,8 +35,13 @@ function processSquads() {
 		SQUADS_UPDATED=false
 		date_utc=$(date -u +"%m/%d/%Y %H:%M:%S")
 
-		echo "${new_version}|${date_utc}" > "version/${type}.version"
+		echo "${new_version}|${date_utc}" > "$version_file"
 		zip -j "${type}.zip" "$files"
+
+		git add "$version_file"
+		git commit -m "Update ${type} version to ${new_version}."
+		git push
+
 		echo "Updated ${type} version from ${old_version} to ${new_version}."
 	fi
 }
