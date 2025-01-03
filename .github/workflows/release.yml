@@ -14,9 +14,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # - name: Setup GitHub CLI
-      #   run: bash scripts/setup-gh-cli.sh
-
       - name: Download Squads
         run: bash scripts/download-squads.sh
 
@@ -24,7 +21,11 @@ jobs:
         run: bash scripts/process-squads.sh
 
       - name: Create or Update FutSquads Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: bash scripts/create-release.sh fut-squads ${{ steps.get_fut_version.outputs.id }}
 
       - name: Create or Update Squads Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: bash scripts/create-release.sh squads ${{ steps.get_squads_version.outputs.id }}
