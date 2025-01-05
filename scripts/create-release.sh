@@ -31,6 +31,10 @@ if [ -f "fut-squads.zip" ]; then
 	RELEASE_FILES+=("fut-squads.zip")
 fi
 
+if [ -f "all-in-one.zip" ]; then
+	RELEASE_FILES+=("all-in-one.zip")
+fi
+
 if [ "$SQUADS_UPDATED" == false ]; then
 	if gh release view "$RELEASE_TAG" &> /dev/null; then
 		echo "Updating release... Tag: ${RELEASE_TAG}"
