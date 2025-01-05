@@ -2,6 +2,7 @@
 
 SQUADS_UPDATED=true
 RESULT_FOLDER="downloader/result/pc64"
+ALL_IN_ONE_FILES=()
 
 if [ ! -d "$RESULT_FOLDER" ]; then
 	echo "Result folder not found: $RESULT_FOLDER"
@@ -42,7 +43,7 @@ function push_version_changes() {
 	git push
 }
 
-function processSquads() {
+function process_squads() {
 	local type="$1" # fut-squads | squads
 	local folder_name folder files version_data new_version old_version date_utc
 
@@ -55,6 +56,7 @@ function processSquads() {
 	folder_name=$(if [ "$type" == "fut-squads" ]; then echo "FUT"; else echo "squads"; fi)
 	folder=$(ls -d $RESULT_FOLDER/"$folder_name"/*/)
 	files=$(find "$folder" -type f ! -name "*.bin")
+	ALL_IN_ONE_FILES+=("$files")
 
 	version_file="version/${type}.version"
 	version_data=$(cat "$version_file" 2> /dev/null)
@@ -75,7 +77,14 @@ function processSquads() {
 	fi
 }
 
-processSquads "squads"
-processSquads "fut-squads"
+function make_aio_zip() {
+	if [ "$SQUADS_UPDATED" == false ]; then
+		zip -j "all-in-one.zip" "${ALL_IN_ONE_FILES[@]}"
+	fi
+}
+
+process_squads "squads"
+process_squads "fut-squads"
+make_aio_zip
 
 echo "SQUADS_UPDATED=${SQUADS_UPDATED}" >> "$GITHUB_ENV"
