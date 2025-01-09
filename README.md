@@ -8,3 +8,4 @@ The links below will always download the latest version of the squads, useful fo
 
 - [https://github.com/sirius-beck/fc25-pc-squads/releases/download/pc64/squads.zip](https://github.com/sirius-beck/fc25-pc-squads/releases/download/pc64/squads.zip)
 - [https://github.com/sirius-beck/fc25-pc-squads/releases/download/pc64/fut-squads.zip](https://github.com/sirius-beck/fc25-pc-squads/releases/download/pc64/fut-squads.zip)
+- [https://github.com/sirius-beck/fc25-pc-squads/releases/download/pc64/all-in-one.zip](https://github.com/sirius-beck/fc25-pc-squads/releases/download/pc64/all-in-one.zip)
